@@ -6,6 +6,16 @@ class LoginPage:
     def __init__(self, driver):
         self.driver = driver
 
-    def get_username_input(self, driver):
-        return driver.find_element(By.XPATH, "//input[@id='username']")
+    def get_username_input(self):
+        return self.driver.find_element(By.XPATH, "//input[@id='username']")
+
+    def get_password_input(self):
+        return self.driver.find_element(By.XPATH, "//input[@id='password']")
+
+    def get_login_button(self):
+        return self.driver.find_element(By.XPATH, "//form/button")
+
+    def get_signup_button(self):
+        return self.driver.find_element(By.LINK_TEXT, "Don't have an account? Sign Up")
+
 
