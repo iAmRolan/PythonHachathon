@@ -16,6 +16,8 @@ class LoginPage:
         return self.driver.find_element(By.XPATH, "//form/button")
 
     def get_signup_button(self):
-        return self.driver.find_element(By.LINK_TEXT, "Don't have an account? Sign Up")
+        return self.driver.find_element(By.PARTIAL_LINK_TEXT, "Don't have an account")
+
+
 
 

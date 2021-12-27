@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PythonHachathon.iml" filepath="$PROJECT_DIR$/.idea/PythonHachathon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/PythonHackathon.iml" filepath="$PROJECT_DIR$/.idea/PythonHackathon.iml" />
     </modules>
   </component>
 </project>
