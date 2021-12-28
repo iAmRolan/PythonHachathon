@@ -61,6 +61,7 @@ def init_appium(request):
     desired_capabilities['platformName'] = platformName
     driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_capabilities)
 
+    globals()['get_data_path'] = "../files/currency_convertor.xml"
     globals()['driver'] = driver
 
     request.cls.driver = driver

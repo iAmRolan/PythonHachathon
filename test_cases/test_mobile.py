@@ -2,6 +2,7 @@ import pytest
 
 import utilities
 from extensions import Verifications
+from utilities.common_ops import CommonOps
 from utilities.manage_pages import ManagePages
 from work_flows.mobile_work_flows import MobileWorkFlows
 
@@ -12,7 +13,8 @@ class Test_Cases_Mobile:
     def test_currency_conversion(self):
         MobileWorkFlows.conversion()
 
-        Verifications.verify_text(utilities.manage_pages.currency_convertor_page.get_result().text, "5 ILS = 125 USD")
+        Verifications.verify_text(utilities.manage_pages.currency_convertor_page.get_result().text,
+                                  CommonOps.get_data("ExpectedResult"))
 
     @pytest.mark.parametrize(
         "principle_input, monthly_deposit_input, period_input, interest_rate_input",
