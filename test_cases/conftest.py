@@ -47,6 +47,7 @@ def init_web(request):
     globals()['action'] = ActionChains(driver)
     eyes.api_key = CommonOps.get_data("AppliToolsAPIKey")
 
+    # request
     request.cls.eyes = eyes
     request.cls.driver = driver
     driver.implicitly_wait(5)
