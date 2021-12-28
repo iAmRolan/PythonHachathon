@@ -38,3 +38,8 @@ class MobileWorkFlows:
     def reset_compound_calc():
         UIActions.click_element(utilities.manage_pages.compound_interest_calc_page.get_navigation())
         UIActions.click_element(utilities.manage_pages.compound_interest_calc_page.get_reset())
+
+    @staticmethod
+    @allure.step("Go to app home screen")
+    def navigate_back():
+        UIActions.click_element(utilities.manage_pages.compound_interest_calc_page.get_navigation())

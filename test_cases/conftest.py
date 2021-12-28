@@ -1,27 +1,25 @@
+import os
+
 import pytest
+from applitools.selenium import Eyes
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
-from utilities.manage_pages import ManagePages
-from applitools.selenium import Eyes
+from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+
 from utilities.common_ops import CommonOps
 from utilities.manage_db import ManageDB
-
-
+from utilities.manage_pages import ManagePages
 
 driver = None
 action = None
 eyes = None
 desired_capabilities = {}
 
-# Mobile
-reportDirectory = 'reports'
-reportFormat = 'xml'
-testName = 'Untitled'
-uuid = 'ce0517157c63b41702'
-appPackage = 'com.financial.calculator'
-appActivity = ".FinancialCalculators"
-platformName = "android"
+# API
+url_api = None
+header = None
 
 # xml files paths.
 get_data_path = None
@@ -29,9 +27,17 @@ get_data_path = None
 
 @pytest.fixture(scope='class')
 def init_web(request):
-    driver = webdriver.Chrome(ChromeDriverManager().install())
-    driver.maximize_window()
+    browser_type = os.getenv("BrowserType")
+    if browser_type.lower() == "chrome":
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+    elif browser_type.lower == "firefox":
+        driver = webdriver.Firefox(GeckoDriverManager().install())
+    elif browser_type.lower == "edge":
+        driver = webdriver.Edge(EdgeChromiumDriverManager().install())
+    else:
+        raise Exception("Wrong browser type")
 
+    driver.maximize_window()
     globals()['driver'] = driver
     globals()['eyes'] = Eyes()
     globals()['action'] = ActionChains(driver)
@@ -52,16 +58,15 @@ def init_web(request):
 
 @pytest.fixture(scope='class')
 def init_appium(request):
-    desired_capabilities['reportDirectory'] = reportDirectory
-    desired_capabilities['reportFormat'] = reportFormat
-    desired_capabilities['testName'] = testName
-    desired_capabilities['uuid'] = uuid
-    desired_capabilities['appPackage'] = appPackage
-    desired_capabilities['appActivity'] = appActivity
-    desired_capabilities['platformName'] = platformName
+    globals()['get_data_path'] = "../files/mobile_data.xml"
+    desired_capabilities['reportDirectory'] = CommonOps.get_data("reportDirectory")
+    desired_capabilities['reportFormat'] = CommonOps.get_data("reportFormat")
+    desired_capabilities['testName'] = CommonOps.get_data("testName")
+    desired_capabilities['uuid'] = CommonOps.get_data("uuid")
+    desired_capabilities['appPackage'] = CommonOps.get_data("appPackage")
+    desired_capabilities['appActivity'] = CommonOps.get_data("appActivity")
+    desired_capabilities['platformName'] = CommonOps.get_data("platformName")
     driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_capabilities)
-
-    globals()['get_data_path'] = "../files/currency_convertor.xml"
     globals()['driver'] = driver
 
     request.cls.driver = driver
@@ -91,3 +96,25 @@ def init_desktop(request):
     yield
     driver.quit()
     ManageDB.close_connection()
+
+
+@pytest.fixture(scope="class")
+def init_api():
+    globals()['get_data_path'] = "../files/api_parameters.xml"
+    globals()['url_api'] = CommonOps.get_data("ApiURL")
+    globals()['header'] = {'Content-type': 'application/json'}
+
+
+@pytest.fixture(scope='class')
+def init_electron(request):
+    globals()['get_data_path'] = "../files/parameters_electron.xml"
+    options = webdriver.ChromeOptions()
+    options.binary_location = CommonOps.get_data('Electron_App')
+    driver = webdriver.Chrome(chrome_options=options, executable_path=CommonOps.get_data('Electron_Driver'))
+    globals()['driver'] = driver
+    request.cls.driver = driver
+
+    ManagePages.init_electron_pages(driver)
+
+    yield
+    driver.quit()

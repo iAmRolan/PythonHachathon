@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 import utilities
@@ -10,12 +11,16 @@ from work_flows.mobile_work_flows import MobileWorkFlows
 @pytest.mark.usefixtures('init_appium')
 class Test_Cases_Mobile:
 
+    @allure.title("Test currency conversion")
+    @allure.description("Verify currency conversions rate")
     def test_currency_conversion(self):
         MobileWorkFlows.conversion()
 
         Verifications.verify_text(utilities.manage_pages.currency_convertor_page.get_result().text,
                                   CommonOps.get_data("ExpectedResult"))
 
+    @allure.title("Test compound interest")
+    @allure.description("Verify compound interest added")
     @pytest.mark.parametrize(
         "principle_input, monthly_deposit_input, period_input, interest_rate_input",
         [
@@ -25,6 +30,7 @@ class Test_Cases_Mobile:
         ]
     )
     def test_untitled(self, principle_input, monthly_deposit_input, period_input, interest_rate_input):
+        MobileWorkFlows.navigate_back()
         MobileWorkFlows.compound_interest(principle_input, monthly_deposit_input, period_input, interest_rate_input)
 
         results = utilities.manage_pages.compound_interest_calc_page.get_results()

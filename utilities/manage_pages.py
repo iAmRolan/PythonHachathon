@@ -1,3 +1,6 @@
+from page_objects.electron_pages.manage_windows_page import ManageWindowsPage
+from page_objects.electron_pages.menu_page import MenuPage
+from page_objects.electron_pages.tray_page import TrayPage
 from page_objects.web_pages.login_page import LoginPage
 from page_objects.web_pages.signup_form import SignUpForm
 from page_objects.web_pages.home_page import HomePage
@@ -24,6 +27,11 @@ compound_interest_calc_page = None
 # Desktop
 calc_main_page = None
 
+# Electron
+electron_menu_page = None
+manage_windows_page = None
+tray_page = None
+
 
 class ManagePages:
 
@@ -44,3 +52,9 @@ class ManagePages:
     def init_mobile_pages(driver):
         globals()['currency_convertor_page'] = CurrencyConvertorPage(driver)
         globals()['compound_interest_calc_page'] = CompoundInterestCalc(driver)
+
+    @staticmethod
+    def init_electron_pages(driver):
+        globals()['electron_menu_page'] = MenuPage(driver)
+        globals()['manage_windows_page'] = ManageWindowsPage(driver)
+        globals()['tray_page'] = TrayPage(driver)
