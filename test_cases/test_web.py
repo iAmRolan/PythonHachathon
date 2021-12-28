@@ -14,7 +14,7 @@ class Test_Cases_Web:
     @allure.title("Test user creation")
     @allure.description("Verify new user created")
     def test_create_user(self):
-        self.driver.get("http://localhost:3000/")
+        self.driver.get("http://localhost:3000/signin")
         WebWorkFlows.sign_up()
         WebWorkFlows.login_new_user()
         WebWorkFlows.after_first_sign_up()

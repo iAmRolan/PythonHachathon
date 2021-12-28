@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Environment>
     <Electron_App>C:\Automation\Electron API Demos-win32-ia32\Electron API Demos.exe</Electron_App>
-    <Electron_Driver>..\drivers\electrondriver.exe</Electron_Driver>
+    <Electron_Driver>C:\Automation\PythonHachathon\drivers\electrondriver.exe</Electron_Driver>
 </Environment>
