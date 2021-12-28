@@ -16,7 +16,7 @@ from utilities.manage_pages import ManagePages
 
 driver = None
 action = None
-eyes = None
+eyes = Eyes()
 desired_capabilities = {}
 
 # API
@@ -44,7 +44,6 @@ def init_web(request):
 
     globals()['driver'] = driver
     globals()['get_data_path'] = "C:/Automation/PythonHachathon/files/Web_User_to_test.xml"
-    globals()['eyes'] = Eyes()
     globals()['action'] = ActionChains(driver)
     eyes.api_key = CommonOps.get_data("AppliToolsAPIKey")
 
@@ -55,7 +54,7 @@ def init_web(request):
     ManagePages.init_web_pages(driver)
 
     yield
-    # eyes.close()
+    eyes.close()
     driver.quit()
     eyes.abort()
 
